@@ -45,6 +45,9 @@ class _MyWidgetState extends State<weather> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           weatherLocation(),
+          const SizedBox(
+            height: 20,
+          ),
           locationdatetime(),
           weatherIcon(),
           locationTemperature(),
@@ -70,11 +73,32 @@ class _MyWidgetState extends State<weather> {
       children: [
         Text(
           DateFormat("h:mm a").format(now),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          style: const TextStyle(
+            fontSize: 35,
+          ),
         ),
         const SizedBox(
-          height: 30,
-        )
+          height: 10,
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              DateFormat("EEEE").format(now),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "  ${DateFormat("d.mm.y").format(now)}",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -115,8 +139,8 @@ class _MyWidgetState extends State<weather> {
   Widget locationhumidity() {
     return Container(
       padding: const EdgeInsets.all(10),
-      height: 70,
-      width: 350,
+      height: 65,
+      width: 300,
       decoration: BoxDecoration(
         color: Colors.blueGrey,
         borderRadius: BorderRadius.circular(20),
@@ -126,13 +150,13 @@ class _MyWidgetState extends State<weather> {
           Text(
             "Humidity: ${_weather?.humidity?.toStringAsFixed(0)}",
             style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white),
           ),
           const Spacer(),
           Text(
             "Wind: ${_weather?.windSpeed?.toStringAsFixed(0)} m/s",
             style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white),
           ),
         ],
       ),

@@ -23,6 +23,8 @@ class _MyWidgetState extends State<splashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      backgroundColor: Colors.amber,
+    );
   }
 }

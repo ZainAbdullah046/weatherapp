@@ -128,7 +128,7 @@ class _MyWidgetState extends State<weather> {
             style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
           ),
-          Spacer(),
+          const Spacer(),
           Text(
             "Wind: ${_weather?.windSpeed?.toStringAsFixed(0)} m/s",
             style: const TextStyle(

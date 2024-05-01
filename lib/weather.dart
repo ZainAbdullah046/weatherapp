@@ -17,7 +17,8 @@ class _MyWidgetState extends State<weather> {
   @override
   void initState() {
     super.initState();
-    wf.currentWeatherByCityName("oslo").then((w) {
+    String name = "Oslo";
+    wf.currentWeatherByCityName(name).then((w) {
       setState(() {
         _weather = w;
       });
@@ -92,7 +93,7 @@ class _MyWidgetState extends State<weather> {
               ),
             ),
             Text(
-              "  ${DateFormat("d.mm.y").format(now)}",
+              "  ${DateFormat("d - y").format(now)}",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),

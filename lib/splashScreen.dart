@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'package:weatherapp/weather.dart';
@@ -17,7 +16,7 @@ class _SplashScreenState extends State<splashScreen> {
     Timer(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const weather()),
+        MaterialPageRoute(builder: (context) => weather()),
       );
     });
     super.initState();

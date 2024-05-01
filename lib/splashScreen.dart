@@ -13,7 +13,7 @@ class splashScreen extends StatefulWidget {
 class _SplashScreenState extends State<splashScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => weather()),

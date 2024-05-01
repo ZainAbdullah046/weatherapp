@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 import 'package:weatherapp/consts.dart';
@@ -19,7 +17,7 @@ class _MyWidgetState extends State<weather> {
   @override
   void initState() {
     super.initState();
-    wf.currentWeatherByCityName("karachi").then((w) {
+    wf.currentWeatherByCityName("oslo").then((w) {
       setState(() {
         _weather = w;
       });
@@ -29,6 +27,7 @@ class _MyWidgetState extends State<weather> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 152, 186, 202),
       body: _uibuild(),
     );
   }
@@ -46,10 +45,13 @@ class _MyWidgetState extends State<weather> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           weatherLocation(),
-          SizedBox(
-            height: 2,
-          ),
           locationdatetime(),
+          weatherIcon(),
+          locationTemperature(),
+          const SizedBox(
+            height: 30,
+          ),
+          locationhumidity(),
         ],
       ),
     );
@@ -58,14 +60,82 @@ class _MyWidgetState extends State<weather> {
   Widget weatherLocation() {
     return Text(
       _weather?.areaName ?? "",
-      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
     );
   }
 
   Widget locationdatetime() {
     DateTime now = _weather!.date!;
     return Column(
-      children: [Text(DateFormat("h:mm a").format(now))],
+      children: [
+        Text(
+          DateFormat("h:mm a").format(now),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+        ),
+        const SizedBox(
+          height: 30,
+        )
+      ],
+    );
+  }
+
+  Widget weatherIcon() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: MediaQuery.sizeOf(context).height * 0.20,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(
+                  "http://openweathermap.org/img/wn/${_weather?.weatherIcon}@4x.png"),
+            ),
+          ),
+        ),
+        Text(
+          _weather?.weatherDescription ?? "",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget locationTemperature() {
+    return Text(
+      "${_weather?.temperature?.celsius?.toStringAsFixed(0)} °C",
+      style: const TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget locationhumidity() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      height: 70,
+      width: 350,
+      decoration: BoxDecoration(
+        color: Colors.blueGrey,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          Text(
+            "Humidity: ${_weather?.humidity?.toStringAsFixed(0)}",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+          ),
+          Spacer(),
+          Text(
+            "Wind: ${_weather?.windSpeed?.toStringAsFixed(0)} m/s",
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+          ),
+        ],
+      ),
     );
   }
 }

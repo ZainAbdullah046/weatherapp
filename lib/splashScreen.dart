@@ -1,32 +1,35 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'package:weatherapp/weather.dart';
 
-class splashScreen extends StatefulWidget {
-  const splashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<splashScreen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<splashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 2), () {
+    super.initState();
+    Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => weather()),
+        MaterialPageRoute(
+            builder: (context) =>
+                weather()), // Change to Weather() or your weather screen class name
       );
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(child: Image.asset('assessts/images/logo.jpeg')),
+      body: Center(
+          child:
+              Image.asset('assets/images/logo.jpeg')), // Corrected asset path
     );
   }
 }

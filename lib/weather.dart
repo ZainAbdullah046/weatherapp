@@ -12,12 +12,16 @@ class weather extends StatefulWidget {
 
 class _MyWidgetState extends State<weather> {
   final WeatherFactory wf = WeatherFactory(open_weather_key);
-
+  TextEditingController citynamecontroller = TextEditingController();
   Weather? _weather;
   @override
   void initState() {
     super.initState();
-    String name = "Oslo";
+    citynamecontroller = TextEditingController();
+    fetchweather("Karachi");
+  }
+
+  void fetchweather(String name) {
     wf.currentWeatherByCityName(name).then((w) {
       setState(() {
         _weather = w;
@@ -28,8 +32,34 @@ class _MyWidgetState extends State<weather> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 152, 186, 202),
-      body: _uibuild(),
+      backgroundColor: const Color.fromARGB(255, 161, 196, 228),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: TextField(
+                controller: citynamecontroller,
+                decoration: InputDecoration(
+                  hintText: 'Enter city name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  fillColor: const Color.fromARGB(255, 144, 150, 158),
+                  filled: true,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      fetchweather(citynamecontroller.text);
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(child: _uibuild()),
+          ],
+        ),
+      ),
     );
   }
 
@@ -111,7 +141,8 @@ class _MyWidgetState extends State<weather> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: MediaQuery.sizeOf(context).height * 0.20,
+          height:
+              MediaQuery.of(context).size.height * 0.20, // Fixed the line here
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
@@ -143,7 +174,7 @@ class _MyWidgetState extends State<weather> {
       height: 65,
       width: 300,
       decoration: BoxDecoration(
-        color: Colors.blueGrey,
+        color: const Color.fromARGB(255, 37, 44, 133),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(

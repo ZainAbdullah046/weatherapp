@@ -34,30 +34,38 @@ class _MyWidgetState extends State<weather> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 161, 196, 228),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: TextField(
-                controller: citynamecontroller,
-                decoration: InputDecoration(
-                  hintText: 'Enter city name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  fillColor: const Color.fromARGB(255, 144, 150, 158),
-                  filled: true,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      fetchweather(citynamecontroller.text);
-                    },
-                    icon: const Icon(Icons.search),
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/back.jpeg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: TextField(
+                  controller: citynamecontroller,
+                  decoration: InputDecoration(
+                    hintText: 'Enter city name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    fillColor: const Color.fromARGB(255, 144, 150, 158),
+                    filled: true,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        fetchweather(citynamecontroller.text);
+                      },
+                      icon: const Icon(Icons.search),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(child: _uibuild()),
-          ],
+              Expanded(child: _uibuild()),
+            ],
+          ),
         ),
       ),
     );

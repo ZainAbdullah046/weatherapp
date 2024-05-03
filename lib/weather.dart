@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
 import 'package:weatherapp/consts.dart';
@@ -56,7 +58,7 @@ class _WeatherAppState extends State<weather> {
               ),
             ),
           ),
-          Expanded(child: _buildUI()),
+          Expanded(child: SingleChildScrollView(child: _buildUI())),
         ],
       ),
     );
@@ -71,18 +73,18 @@ class _WeatherAppState extends State<weather> {
       height: MediaQuery.of(context).size.height,
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _weatherLocation(),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.01,
           ),
           _locationDateTime(),
           _weatherIcon(),
           _locationTemperature(),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.04,
           ),
           _locationHumidity(),
         ],
@@ -104,11 +106,11 @@ class _WeatherAppState extends State<weather> {
         Text(
           DateFormat("h:mm a").format(now),
           style: const TextStyle(
-            fontSize: 35,
+            fontSize: 30,
           ),
         ),
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -122,7 +124,7 @@ class _WeatherAppState extends State<weather> {
               ),
             ),
             Text(
-              "  ${DateFormat("d - y").format(now)}",
+              DateFormat("   d-M-y").format(DateTime.now()),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -140,7 +142,7 @@ class _WeatherAppState extends State<weather> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: 100, // Adjust this height as needed
+          height: MediaQuery.of(context).size.height * 0.3,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
@@ -163,17 +165,18 @@ class _WeatherAppState extends State<weather> {
   Widget _locationTemperature() {
     return Text(
       "${_weather?.temperature?.celsius?.toStringAsFixed(0)} °C",
-      style: const TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
     );
   }
 
   Widget _locationHumidity() {
     return Container(
       padding: const EdgeInsets.all(10),
-      height: 65,
-      width: 300,
+      margin: const EdgeInsets.all(5),
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: MediaQuery.of(context).size.height * 0.6,
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 37, 44, 133),
+        color: const Color.fromARGB(255, 49, 54, 117),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(

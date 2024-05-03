@@ -83,9 +83,6 @@ class _WeatherAppState extends State<weather> {
           _locationDateTime(),
           _weatherIcon(),
           _locationTemperature(),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.04,
-          ),
           _locationHumidity(),
         ],
       ),
@@ -142,7 +139,7 @@ class _WeatherAppState extends State<weather> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.3,
+          height: MediaQuery.of(context).size.height * 0.25,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(

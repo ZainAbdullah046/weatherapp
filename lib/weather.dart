@@ -4,24 +4,25 @@ import 'package:weather/weather.dart';
 import 'package:weatherapp/consts.dart';
 
 class weather extends StatefulWidget {
-  const weather({super.key});
+  const weather({Key? key}) : super(key: key);
 
   @override
-  State<weather> createState() => _MyWidgetState();
+  State<weather> createState() => _WeatherAppState();
 }
 
-class _MyWidgetState extends State<weather> {
+class _WeatherAppState extends State<weather> {
   final WeatherFactory wf = WeatherFactory(open_weather_key);
   TextEditingController citynamecontroller = TextEditingController();
   Weather? _weather;
+
   @override
   void initState() {
     super.initState();
     citynamecontroller = TextEditingController();
-    fetchweather("Karachi");
+    fetchWeather("Karachi");
   }
 
-  void fetchweather(String name) {
+  void fetchWeather(String name) {
     wf.currentWeatherByCityName(name).then((w) {
       setState(() {
         _weather = w;
@@ -33,45 +34,35 @@ class _MyWidgetState extends State<weather> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 161, 196, 228),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/back.jpeg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: TextField(
-                  controller: citynamecontroller,
-                  decoration: InputDecoration(
-                    hintText: 'Enter city name',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    fillColor: const Color.fromARGB(255, 144, 150, 158),
-                    filled: true,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        fetchweather(citynamecontroller.text);
-                      },
-                      icon: const Icon(Icons.search),
-                    ),
-                  ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: TextField(
+              controller: citynamecontroller,
+              decoration: InputDecoration(
+                hintText: 'Enter city name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                fillColor: const Color.fromARGB(255, 144, 150, 158),
+                filled: true,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    fetchWeather(citynamecontroller.text);
+                  },
+                  icon: const Icon(Icons.search),
                 ),
               ),
-              Expanded(child: _uibuild()),
-            ],
+            ),
           ),
-        ),
+          Expanded(child: _buildUI()),
+        ],
       ),
     );
   }
 
-  Widget _uibuild() {
+  Widget _buildUI() {
     if (_weather == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -83,30 +74,30 @@ class _MyWidgetState extends State<weather> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          weatherLocation(),
+          _weatherLocation(),
           const SizedBox(
             height: 20,
           ),
-          locationdatetime(),
-          weatherIcon(),
-          locationTemperature(),
+          _locationDateTime(),
+          _weatherIcon(),
+          _locationTemperature(),
           const SizedBox(
             height: 30,
           ),
-          locationhumidity(),
+          _locationHumidity(),
         ],
       ),
     );
   }
 
-  Widget weatherLocation() {
+  Widget _weatherLocation() {
     return Text(
       _weather?.areaName ?? "",
       style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
     );
   }
 
-  Widget locationdatetime() {
+  Widget _locationDateTime() {
     DateTime now = _weather!.date!;
     return Column(
       children: [
@@ -142,19 +133,19 @@ class _MyWidgetState extends State<weather> {
     );
   }
 
-  Widget weatherIcon() {
+  Widget _weatherIcon() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height:
-              MediaQuery.of(context).size.height * 0.20, // Fixed the line here
+          height: 100, // Adjust this height as needed
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                  "http://openweathermap.org/img/wn/${_weather?.weatherIcon}@4x.png"),
+                "http://openweathermap.org/img/wn/${_weather?.weatherIcon}@4x.png",
+              ),
             ),
           ),
         ),
@@ -169,14 +160,14 @@ class _MyWidgetState extends State<weather> {
     );
   }
 
-  Widget locationTemperature() {
+  Widget _locationTemperature() {
     return Text(
       "${_weather?.temperature?.celsius?.toStringAsFixed(0)} °C",
       style: const TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
     );
   }
 
-  Widget locationhumidity() {
+  Widget _locationHumidity() {
     return Container(
       padding: const EdgeInsets.all(10),
       height: 65,

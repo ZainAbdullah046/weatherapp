@@ -16,9 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) =>
-                weather()), // Change to Weather() or your weather screen class name
+        MaterialPageRoute(builder: (context) => weather()),
       );
     });
   }
@@ -27,9 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-          child:
-              Image.asset('assets/images/logo.jpeg')), // Corrected asset path
+      body: Center(child: Image.asset('assessts/images/logo.jpeg')),
     );
   }
 }
